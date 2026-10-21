@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone Goose compiler
+        run: git clone --depth 1 https://github.com/aardappel/goose.git goose-compiler
+
+      - name: Build Goose compiler
+        run: |
+          cd goose-compiler
+          cmake -B build -S .
+          cmake --build build -j
+
+      - name: Build and run unit tests
+        run: |
+          ./goose-compiler/build/goose build test_fib.goose
+          ./test_fib
