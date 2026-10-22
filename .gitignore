@@ -3,3 +3,6 @@ fib
 test_fib
 /build
 flake.lock
+result
+.#*
+#*#
